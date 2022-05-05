@@ -4,22 +4,25 @@ import React from "react";
 
 const feedBackTypes = {
   BUG: {
-    folderUrl: "../assets/bug.svg",
+    title: "Problema",
+    folderUrl: "./src/assets/bug.svg",
     altText: "image de uma largata roxa olhando para frente",
   },
   IDEA: {
-    folgerUrl: "../assets/idea.svg",
+    title: "Ideia",
+    folderUrl: "./src/assets/idea.svg",
     altText: "Imagen de uma lampada acesa representando uma idea",
   },
   THOUGHT: {
-    folderURL: "../assets/thought.svg",
+    title: "Outros",
+    folderUrl: "./src/assets/thought.svg",
     altText: "Imagem de uma nuvem de pensamento",
   },
 };
 export function WidGetForm() {
   return (
     <div className="relative bg-zinc-800 rounded-2xl w-[calc(100vw-2rem)] md:w-auto py-2 flex flex-col items-center">
-      <header className="bg-green-500 flex items-around">
+      <header className="flex items-around">
         <span className="text-white ">Deixe seu FeedBack </span>
         <Popover.Button
           className="text-zinc-500 hover:text-zinc-100 absolute top-3 right-3"
@@ -29,10 +32,21 @@ export function WidGetForm() {
           <X weight="bold" />
         </Popover.Button>
       </header>
-      <main>
+      <main className="p-2 my-8 flex gap-2">
         {Object.entries(feedBackTypes).map(([key, value]) => {
-          console.log(key, value);
-          return null;
+          return (
+            <button
+              className="bg-[#3f3f46] outline-none border-solid border-2 border-transparent focus:border-violet-500 hover:border-violet-500 rounded-lg px-2 py-5 w-24 h-28 flex flex-col items-center gap-2"
+              key={key}
+            >
+              <img
+                className="w-10 h-10"
+                src={value.folderUrl}
+                alt={value.altText}
+              />
+              <p className="text-white font-bold">{value.title}</p>
+            </button>
+          );
         })}
       </main>
       <footer className="text-sm text-zinc-400 mt-4">

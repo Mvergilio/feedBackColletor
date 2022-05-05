@@ -3,7 +3,7 @@ import React from "react";
 import { Popover } from "@headlessui/react";
 import { ChatTeardropDots } from "phosphor-react";
 
-import { WidGetForm } from "./WidGetForm";
+import { WidGetForm } from "./WidGetForm/Index";
 
 export function WidGet() {
   return (

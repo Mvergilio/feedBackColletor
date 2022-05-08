@@ -11,6 +11,7 @@ import troughtImage from "../../assets/thought.svg";
 // components imports
 import { FeedbackTypeStep } from "./Steps/FeedBackTypeStep";
 import { FeedBackTypeContentStep } from "./Steps/FeedBackTypeContentStep";
+import { FeedBackTypeSuccessStep } from "./Steps/FeedBackTypeSuccessStep";
 export const feedBackTypes = {
   BUG: {
     title: "Problema",
@@ -36,24 +37,50 @@ export const feedBackTypes = {
 };
 
 export type FeedBackType = keyof typeof feedBackTypes;
-
+export interface isScreenShotTakenType {
+  isScreenShotTaken: string | null;
+}
 export function WidGetForm() {
   const [feedbackType, setFeedBackType] = useState<FeedBackType | null>(null);
+  const [isScreenShotTaken, setIsScreenShotTaken] = useState<string | null>(
+    null
+  );
+  const [isFeedBackSend, setIsFeedBackSend] = useState(false);
   function handleFeedBackRestart() {
+    setIsScreenShotTaken(null);
     setFeedBackType(null);
+  }
+  function onScreenShotTakenRequested(image: string | null): void {
+    setIsScreenShotTaken(image);
+  }
+  function onFeedBackSendRequested() {
+    setIsFeedBackSend(true);
   }
   return (
     <div className="relative bg-zinc-800 rounded-2xl w-[calc(100vw-2rem)] md:w-auto py-2 flex flex-col items-center">
-      {!feedbackType ? (
-        <FeedbackTypeStep onFeedBackTypeChanged={setFeedBackType} />
-      ) : (
-        <FeedBackTypeContentStep
-          onFeedBackTypeRestartRequested={handleFeedBackRestart}
-          feedbackType={feedbackType}
-        />
-      )}
+      {(() => {
+        if (isFeedBackSend === true) {
+          return (
+            <FeedBackTypeSuccessStep
+              onFeedBackSendRequested={onFeedBackSendRequested}
+            />
+          );
+        } else {
+          if (!feedbackType) {
+            return <FeedbackTypeStep onFeedBackTypeChanged={setFeedBackType} />;
+          } else {
+            <FeedBackTypeContentStep
+              onFeedBackSendRequested={onFeedBackSendRequested}
+              onScreenShotTakenRequested={onScreenShotTakenRequested}
+              isScreenShotTaken={isScreenShotTaken}
+              onFeedBackTypeRestartRequested={handleFeedBackRestart}
+              feedbackType={feedbackType}
+            />;
+          }
+        }
+      })()}
 
-      <footer className="text-sm text-zinc-400 mt-4">
+      <footer className="text-sm text-zinc-400 mt-auto">
         Feito com ♥ por{" "}
         <a className="underline underline-offset-2" href="#">
           Marco Antonio

@@ -1,14 +1,21 @@
 import { Popover } from "@headlessui/react";
 import { ArrowLeft, X } from "phosphor-react";
-import { FeedBackType, feedBackTypes } from "../Index";
+import { FeedBackType, feedBackTypes, isScreenShotTakenType } from "../Index";
+import { ScreenShotButton } from "../ScreenShotButton";
 
 interface FeedBackTypeContentStep {
   onFeedBackTypeRestartRequested: () => void;
+  onScreenShotTakenRequested: (image: string | null) => void;
   feedbackType: FeedBackType;
+  isScreenShotTaken: string | null;
+  onFeedBackSendRequested: () => void;
 }
 export function FeedBackTypeContentStep({
   onFeedBackTypeRestartRequested,
+  onScreenShotTakenRequested,
   feedbackType,
+  isScreenShotTaken,
+  onFeedBackSendRequested,
 }: FeedBackTypeContentStep) {
   return (
     <>
@@ -39,13 +46,27 @@ export function FeedBackTypeContentStep({
         </Popover.Button>
       </header>
 
-      <div className="p-2 my-8 flex gap-2 flex-1">
+      <div className="p-2 my-2 flex gap-2 flex-1">
         <form action="#" className="my-4 w-full">
           <textarea
-            className="min-w-[304px] w-full min-h-[112px] text-sm placeholder-zinc-400 text-zinc-100 border-zinc-600 bg-transparent rounded-md focus:border-zinc-500 focus:ring-brand-500 focus:ring-1 resize-none outline-none"
+            className="min-w-[304px] w-full min-h-[112px] text-sm placeholder-zinc-400 text-zinc-100 border-zinc-600 bg-transparent rounded-md focus:border-zinc-500 focus:ring-brand-500 focus:ring-1 resize-none outline-none scrollbar scrollbar-track-transparent scrollbar-thumb-zinc-700"
             name="FeedBackContent"
             placeholder="Conte com detalhes o que está acontecendo..."
           />
+          <footer className="flex mt-2 gap-2">
+            <ScreenShotButton
+              onScreenShotTakenRequested={onScreenShotTakenRequested}
+              isScreenShotTaken={isScreenShotTaken}
+            />
+
+            <button
+              onClick={(event) => onFeedBackSendRequested(event)}
+              className="p-2 bg-brand-500 flex-1 rounded-md text-white border-transparent flex justify-center items-center text-sm hover:bg-brand-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-zinc-900 focus:ring-brand-500 transition-colors"
+              type="submit"
+            >
+              Enviar FeedBack
+            </button>
+          </footer>
         </form>
       </div>
     </>

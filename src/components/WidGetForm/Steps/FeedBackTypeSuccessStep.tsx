@@ -1,3 +1,7 @@
 export function FeedBackTypeSuccessStep() {
-  return {<>Success</>};
+  return (
+    <>
+      <h1>Deu certo</h1>
+    </>
+  );
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, MouseEvent } from "react";
 
 import { Popover } from "@headlessui/react";
 import { X } from "phosphor-react";
@@ -53,18 +53,15 @@ export function WidGetForm() {
   function onScreenShotTakenRequested(image: string | null): void {
     setIsScreenShotTaken(image);
   }
-  function onFeedBackSendRequested() {
+  function onFeedBackSendRequested(event: MouseEvent) {
+    event.preventDefault();
     setIsFeedBackSend(true);
   }
   return (
     <div className="relative bg-zinc-800 rounded-2xl w-[calc(100vw-2rem)] md:w-auto py-2 flex flex-col items-center">
       {(() => {
-        if (isFeedBackSend === true) {
-          return (
-            <FeedBackTypeSuccessStep
-              onFeedBackSendRequested={onFeedBackSendRequested}
-            />
-          );
+        if (isFeedBackSend) {
+          return <FeedBackTypeSuccessStep />;
         } else {
           if (!feedbackType) {
             return <FeedbackTypeStep onFeedBackTypeChanged={setFeedBackType} />;

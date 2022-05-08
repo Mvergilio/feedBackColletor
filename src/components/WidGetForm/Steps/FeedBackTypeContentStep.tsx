@@ -2,13 +2,13 @@ import { Popover } from "@headlessui/react";
 import { ArrowLeft, X } from "phosphor-react";
 import { FeedBackType, feedBackTypes, isScreenShotTakenType } from "../Index";
 import { ScreenShotButton } from "../ScreenShotButton";
-
+import { MouseEvent } from "react";
 interface FeedBackTypeContentStep {
   onFeedBackTypeRestartRequested: () => void;
   onScreenShotTakenRequested: (image: string | null) => void;
   feedbackType: FeedBackType;
   isScreenShotTaken: string | null;
-  onFeedBackSendRequested: () => void;
+  onFeedBackSendRequested: (event: MouseEvent) => void;
 }
 export function FeedBackTypeContentStep({
   onFeedBackTypeRestartRequested,

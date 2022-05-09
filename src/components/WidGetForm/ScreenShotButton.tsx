@@ -1,14 +1,15 @@
 import html2canvas from "html2canvas";
 import { Camera, ArrowClockwise, Trash } from "phosphor-react";
 import { useState } from "react";
+import { FeedBackContentBodyType } from "./Index";
 
 interface ScreenShotButtonProps {
   onScreenShotTakenRequested: (image: string | null) => void;
-  isScreenShotTaken: string | null;
+  feedBackContentBody: FeedBackContentBodyType;
 }
 export function ScreenShotButton({
   onScreenShotTakenRequested,
-  isScreenShotTaken,
+  feedBackContentBody,
 }: ScreenShotButtonProps) {
   const [IstakingScreenShot, setIstakingScreenShot] = useState<boolean>(false);
 
@@ -21,7 +22,7 @@ export function ScreenShotButton({
     onScreenShotTakenRequested(imageUrl);
     setIstakingScreenShot(false);
   }
-  if (!isScreenShotTaken) {
+  if (!feedBackContentBody.screenShotimageDataUrl) {
     return (
       <button
         onClick={takingScreenShot}
@@ -39,7 +40,7 @@ export function ScreenShotButton({
     return (
       <button
         style={{
-          backgroundImage: `url(${isScreenShotTaken})`,
+          backgroundImage: `url(${feedBackContentBody.screenShotimageDataUrl})`,
         }}
         onClick={() => onScreenShotTakenRequested(null)}
         type="button"
